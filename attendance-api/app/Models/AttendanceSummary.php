@@ -16,6 +16,18 @@ class AttendanceSummary extends Model
         'total_leave',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'month'         => 'integer',
+            'year'          => 'integer',
+            'total_present' => 'integer',
+            'total_late'    => 'integer',
+            'total_absent'  => 'integer',
+            'total_leave'   => 'integer',
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
