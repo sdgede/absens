@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Api\Attendance;
 
 use App\Http\Controllers\Controller;
@@ -8,8 +9,8 @@ use App\Models\AttendanceSession;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\JsonResponse;
+use App\Helpers\TenantHelper;
 use Illuminate\Http\Request;
-
 class SessionController extends Controller
 {
     /**
@@ -39,7 +40,7 @@ class SessionController extends Controller
     public function store(StoreSessionRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $data['tenant_id'] = currentTenantId();
+        $data['tenant_id'] = TenantHelper::currentTenantId();
 
         $session = AttendanceSession::create($data);
 
@@ -101,7 +102,7 @@ class SessionController extends Controller
             'until_date'      => ['required', 'date_format:Y-m-d', 'after:today'],
         ]);
 
-        $tenantId   = currentTenantId();
+        $tenantId   = TenantHelper::currentTenantId();
         $repeatDays = $request->repeat_days;
         $untilDate  = Carbon::parse($request->until_date);
         $period     = CarbonPeriod::create(Carbon::tomorrow(), $untilDate);
