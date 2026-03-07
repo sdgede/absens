@@ -14,6 +14,8 @@ use App\Services\GpsService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Helpers\TenantHelper;
+
 
 class AttendanceController extends Controller
 {
@@ -27,7 +29,7 @@ class AttendanceController extends Controller
      */
     public function checkIn(CheckInRequest $request): JsonResponse
     {
-        $user = currentUser();
+        $user = TenantHelper::currentUser();
         $now  = Carbon::now();
 
         // 1. Validasi face_confidence
@@ -105,7 +107,7 @@ class AttendanceController extends Controller
      */
     public function checkOut(CheckOutRequest $request): JsonResponse
     {
-        $user = currentUser();
+        $user = TenantHelper::currentUser();
         $now  = Carbon::now();
 
         // Validasi face & liveness
@@ -177,10 +179,9 @@ class AttendanceController extends Controller
      */
     public function today(): JsonResponse
     {
-        $user  = currentUser();
+        $user  = TenantHelper::currentUser();
         $today = Carbon::today()->toDateString();
 
-        // Ambil semua checkin & checkout hari ini
         $records = Attendance::with('session')
             ->where('user_id', $user->id)
             ->whereHas('session', fn($q) => $q->where('date', $today))
@@ -205,7 +206,7 @@ class AttendanceController extends Controller
      */
     public function history(Request $request): JsonResponse
     {
-        $user = currentUser();
+        $user = TenantHelper::currentUser();
 
         $query = Attendance::with('session')
             ->where('user_id', $user->id)
