@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
 import 'bloc/auth/auth_bloc.dart';
-import 'bloc/auth/auth_event.dart';
 import 'bloc/auth/auth_state.dart';
 import 'bloc/theme/theme_cubit.dart';
 import 'res/colors/theme_colors.dart';
@@ -35,9 +34,7 @@ class AttendanceApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ThemeCubit>(
-          create: (_) => ThemeCubit(BlocService.prefs),
-        ),
+        BlocProvider<ThemeCubit>(create: (_) => ThemeCubit(BlocService.prefs)),
         BlocProvider<AuthBloc>(
           create: (_) => AuthBloc(
             authRepo: BlocService.authRepo,
@@ -45,9 +42,7 @@ class AttendanceApp extends StatelessWidget {
           ),
         ),
         BlocProvider<AttendanceBloc>(
-          create: (_) => AttendanceBloc(
-            repo: BlocService.attendanceRepo,
-          ),
+          create: (_) => AttendanceBloc(repo: BlocService.attendanceRepo),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
@@ -68,49 +63,47 @@ class AttendanceApp extends StatelessWidget {
 
 // ── Router ────────────────────────────────────────────────────────────────────
 GoRouter _buildRouter(BuildContext context) => GoRouter(
-      initialLocation: AppRoutes.splash,
-      redirect: (context, state) {
-        // Allow unauthenticated access to splash and login only
-        final loggingIn = state.matchedLocation == AppRoutes.login;
-        final splashing = state.matchedLocation == AppRoutes.splash;
-        if (loggingIn || splashing) return null;
+  initialLocation: AppRoutes.splash,
+  redirect: (context, state) {
+    // Allow unauthenticated access to splash and login only
+    final loggingIn = state.matchedLocation == AppRoutes.login;
+    final splashing = state.matchedLocation == AppRoutes.splash;
+    if (loggingIn || splashing) return null;
 
-        final authState = context.read<AuthBloc>().state;
-        if (authState is AuthUnauthenticated) return AppRoutes.login;
-        return null;
-      },
-      routes: [
-        GoRoute(
-          path: AppRoutes.splash,
-          name: 'splash',
-          builder: (context, state) => const SplashScreen(),
-        ),
-        GoRoute(
-          path: AppRoutes.login,
-          name: 'login',
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
-          path: AppRoutes.home,
-          name: 'home',
-          builder: (context, state) => const _PlaceholderHome(),
-        ),
-        GoRoute(
-          path: AppRoutes.attendance,
-          name: 'attendance',
-          builder: (context, state) => const AttendanceScreen(),
-        ),
-        GoRoute(
-          path: AppRoutes.attendanceHistory,
-          name: 'attendance_history',
-          builder: (context, state) => const AttendanceHistoryScreen(),
-        ),
-        // TODO: add remaining feature routes here
-      ],
-      errorBuilder: (context, state) => Scaffold(
-        body: Center(child: Text('Page not found: ${state.error}')),
-      ),
-    );
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthUnauthenticated) return AppRoutes.login;
+    return null;
+  },
+  routes: [
+    GoRoute(
+      path: AppRoutes.splash,
+      name: 'splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.login,
+      name: 'login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.home,
+      name: 'home',
+      builder: (context, state) => const _PlaceholderHome(),
+    ),
+    GoRoute(
+      path: AppRoutes.attendance,
+      name: 'attendance',
+      builder: (context, state) => const AttendanceScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.attendanceHistory,
+      name: 'attendance_history',
+      builder: (context, state) => const AttendanceHistoryScreen(),
+    ),
+  ],
+  errorBuilder: (context, state) =>
+      Scaffold(body: Center(child: Text('Page not found: ${state.error}'))),
+);
 
 // ── Placeholder home ──────────────────────────────────────────────────────────
 class _PlaceholderHome extends StatelessWidget {
