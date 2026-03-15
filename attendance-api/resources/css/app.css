@@ -1,11 +1,355 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* ─── Tema — Tailwind v4 pakai @theme, bukan tailwind.config.js ─────── */
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Font */
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Warna dark */
+    --color-dark-950: #070B14;
+    --color-dark-900: #0B0F1A;
+    --color-dark-800: #111827;
+    --color-dark-700: #1A2235;
+    --color-dark-600: #1F2D42;
+    --color-dark-500: #2A3A52;
+    --color-dark-400: #334560;
+    --color-dark-300: #556080;
+    --color-dark-200: #8B9EC7;
+    --color-dark-100: #C5CEDF;
+    --color-dark-50: #F0F4FF;
+
+    /* Warna brand */
+    --color-brand: #4F8EF7;
+    --color-brand-dark: #3a7ef0;
+    --color-brand-light: #7EB0FA;
+
+    /* Warna aksen */
+    --color-emerald: #22D3A0;
+    --color-emerald-dark: #15A87E;
+    --color-amber: #F59E0B;
+    --color-amber-dark: #D97706;
+    --color-rose: #F43F5E;
+    --color-rose-dark: #E11D48;
+    --color-violet: #A78BFA;
+    --color-violet-dark: #7C3AED;
+    --color-indigo: #6366F1;
+    --color-indigo-dark: #4F46E5;
+
+    /* Animasi */
+    --animate-fade-up: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    --animate-fade-in: fadeIn 0.3s ease both;
+    --animate-pulse2: pulse2 2s ease-in-out infinite;
+    --animate-spin2: spin2 0.7s linear infinite;
+    --animate-slide-down: slideDown 0.25s ease both;
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulse2 {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @keyframes spin2 {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────── */
+
+@layer base {
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        background-color: var(--color-dark-900);
+        color: var(--color-dark-50);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Autofill — paksa tetap pakai warna dark */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 100px #1A2235 inset !important;
+        -webkit-text-fill-color: #F0F4FF !important;
+        caret-color: #F0F4FF;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #111827;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #2A3A52;
+        border-radius: 3px;
+    }
+}
+
+/* ─── Komponen ────────────────────────────────────────────────────────── */
+
+@layer components {
+
+    /* Input */
+    .input-field {
+        width: 100%;
+        background-color: var(--color-dark-700);
+        border: 1px solid var(--color-dark-500);
+        color: var(--color-dark-50);
+        font-size: 0.875rem;
+        padding: 0.625rem 0.75rem;
+        border-radius: 0.75rem;
+        transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .input-field::placeholder {
+        color: var(--color-dark-300);
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.12);
+    }
+
+    .input-field.error {
+        border-color: var(--color-rose);
+    }
+
+    /* Input dengan ikon di kiri */
+    .input-icon-left {
+        padding-left: 2.25rem;
+    }
+
+    /* Tombol utama */
+    .btn-primary {
+        width: 100%;
+        background-color: var(--color-brand);
+        color: white;
+        font-weight: 700;
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.15s, transform 0.1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-brand-dark);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.98);
+    }
+
+    .btn-primary:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    /* Tombol secondary */
+    .btn-secondary {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        color: var(--color-dark-200);
+        border: 1px solid var(--color-dark-500);
+        padding: 0.375rem 0.625rem;
+        border-radius: 0.5rem;
+        background: none;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+    }
+
+    .btn-secondary:hover {
+        border-color: var(--color-brand);
+        color: var(--color-brand);
+    }
+
+    /* Card */
+    .card {
+        background-color: var(--color-dark-800);
+        border: 1px solid var(--color-dark-500);
+        border-radius: 0.75rem;
+        padding: 1rem;
+    }
+
+    /* Badge status */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.625rem;
+        font-weight: 700;
+        font-family: var(--font-mono);
+    }
+
+    .badge-hadir {
+        background-color: color-mix(in srgb, var(--color-emerald) 12%, transparent);
+        color: var(--color-emerald);
+    }
+
+    .badge-telat {
+        background-color: color-mix(in srgb, var(--color-amber) 12%, transparent);
+        color: var(--color-amber);
+    }
+
+    .badge-alpha {
+        background-color: color-mix(in srgb, var(--color-rose) 12%, transparent);
+        color: var(--color-rose);
+    }
+
+    .badge-izin {
+        background-color: color-mix(in srgb, var(--color-violet) 12%, transparent);
+        color: var(--color-violet);
+    }
+
+    /* Dot grid (panel branding) */
+    .dot-grid {
+        background-image: radial-gradient(circle, #2A3A52 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+
+    /* Nav item sidebar */
+    .nav-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 0.625rem 1.25rem;
+        color: var(--color-dark-200);
+        font-size: 0.8125rem;
+        font-weight: 500;
+        position: relative;
+        transition: background-color 0.15s, color 0.15s;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .nav-item:hover {
+        background-color: color-mix(in srgb, var(--color-brand) 5%, transparent);
+        color: var(--color-dark-50);
+    }
+
+    .nav-item.aktif {
+        color: var(--color-brand);
+        background-color: color-mix(in srgb, var(--color-brand) 10%, transparent);
+    }
+
+    .nav-item.aktif::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 20px;
+        background: var(--color-brand);
+        border-radius: 0 2px 2px 0;
+    }
+
+    /* Header tabel */
+    .th {
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-size: 0.625rem;
+        font-weight: 700;
+        color: var(--color-dark-300);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid var(--color-dark-500);
+    }
+
+    /* Cell tabel */
+    .td {
+        padding: 0.75rem 1rem;
+        color: var(--color-dark-200);
+        border-bottom: 1px solid color-mix(in srgb, var(--color-dark-500) 50%, transparent);
+        vertical-align: middle;
+    }
+
+    /* Baris tabel */
+    .tr:hover .td {
+        background-color: color-mix(in srgb, var(--color-brand) 3%, transparent);
+    }
+
+    /* Progress bar */
+    .progress-track {
+        width: 3rem;
+        height: 0.375rem;
+        background-color: var(--color-dark-500);
+        border-radius: 9999px;
+        overflow: hidden;
+    }
+
+    /* Utility — hidden */
+    .hidden {
+        display: none !important;
+    }
 }
