@@ -5,7 +5,7 @@
     'badge'     => null,
     'badgeTipe' => 'naik',   //{{-- naik | turun | sama --}}
     'ikon'      => null,
-    'warna'     => 'brand',  //{{-- brand | emerald | amber | rose --}}
+    'warna'     => 'brand', // {{-- brand | emerald | amber | rose --}}
     'href'      => null,
 ])
 
@@ -45,7 +45,9 @@
     <div style="position:absolute; top:0; right:0; width:5rem; height:5rem; border-radius:50%; background-color:{{ $warnaNilai }}; opacity:0.07; transform:translate(20px,-20px); pointer-events:none;"></div>
 
     @if ($ikon)
-        <span style="position:absolute; top:0.875rem; right:0.875rem; font-size:1.25rem; opacity:0.4;">{{ $ikon }}</span>
+        <span style="position:absolute; top:0.875rem; right:0.875rem; font-size:1.125rem; opacity:0.4; color:{{ $warnaNilai }};">
+            <i class="{{ $ikon }}"></i>
+        </span>
     @endif
 
     <div style="font-size:0.6875rem; font-weight:700; color:var(--color-dark-300); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.625rem;">{{ $label }}</div>

@@ -8,7 +8,7 @@
     {{-- Filter --}}
     <form method="GET" action="{{ route('admin.karyawan') }}"
         style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem; flex-wrap:wrap;">
-        <input type="text" name="cari" value="{{ request('cari') }}" placeholder="🔍 Cari nama / email / NIP..."
+        <input type="text" name="cari" value="{{ request('cari') }}" placeholder=" Cari nama / email / NIP..."
             class="input-field" style="width:14rem;">
         <select name="cabang_id" class="input-field" style="width:auto;">
             <option value="">Semua Cabang</option>
