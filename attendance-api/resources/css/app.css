@@ -353,3 +353,125 @@
         display: none !important;
     }
 }
+
+
+/* =============================================================
+   Sidebar & Nav — tambahkan ke resources/css/app.css
+   ============================================================= */
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* ===== Nav item ===== */
+.nav-item-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-dark-300);
+    text-decoration: none;
+    border-radius: 0;
+    transition: background 0.15s, color 0.15s;
+    position: relative;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.nav-item-link:hover {
+    background-color: var(--color-dark-700);
+    color: var(--color-dark-50);
+}
+
+.nav-item-link.active {
+    background-color: var(--color-dark-700);
+    color: var(--color-brand);
+}
+
+.nav-item-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background-color: var(--color-brand);
+}
+
+.nav-item-icon {
+    width: 1.125rem;
+    text-align: center;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.nav-badge {
+    margin-left: auto;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    background-color: var(--color-brand);
+    color: white;
+    padding: 0.125rem 0.4rem;
+    border-radius: 999px;
+    min-width: 1.125rem;
+    text-align: center;
+}
+
+.nav-section-label {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-dark-400);
+    padding: 0.625rem 1.25rem 0.25rem;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+/* ===== Nav group (dropdown) ===== */
+.nav-group-chevron {
+    margin-left: auto;
+    font-size: 0.625rem;
+    color: var(--color-dark-400);
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.nav-group-chevron.rotated {
+    transform: rotate(90deg);
+}
+
+/* Child items — indent */
+.nav-group-items .nav-item-link {
+    padding-left: 2.75rem;
+    font-size: 0.75rem;
+}
+
+/* ===== Topbar notifikasi ===== */
+.topbar-notif {
+    width: 2.125rem;
+    height: 2.125rem;
+    border: 1px solid var(--color-dark-500);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark-200);
+    text-decoration: none;
+    font-size: 0.875rem;
+    position: relative;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.topbar-notif:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}

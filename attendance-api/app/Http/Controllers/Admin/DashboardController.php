@@ -29,7 +29,6 @@ class DashboardController extends Controller
             ->pluck('id');
     }
 
-    // ── Ringkasan (Overview) ─────────────────────────────────────────────
 
     public function ringkasan(): View
     {
@@ -39,7 +38,6 @@ class DashboardController extends Controller
 
         $totalKaryawan = $userIds->count();
 
-        // attendances tidak punya tenant_id — filter via whereIn user_id
         $absensiHariIni = Attendance::whereIn('user_id', $userIds)
             ->whereDate('checked_at', $hari)
             ->where('type', 'checkin')
@@ -51,7 +49,6 @@ class DashboardController extends Controller
             'telat'        => $absensiHariIni->where('status', 'late')->count(),
             'alpha'        => $totalKaryawan - $absensiHariIni->count(),
             'izin'         => $absensiHariIni->where('status', 'leave')->count(),
-            // leave_requests tidak punya tenant_id — filter via whereIn user_id
             'pending_izin' => LeaveRequest::whereIn('user_id', $userIds)
                 ->where('status', 'pending')->count(),
         ];
@@ -90,7 +87,6 @@ class DashboardController extends Controller
                 'jumlah'  => $u->jumlah_telat,
             ]);
 
-        // Grafik 7 hari terakhir
         $grafikMingguan = collect(range(6, 0))->map(function ($offset) use ($userIds) {
             $tgl   = today()->subDays($offset);
             $total = Attendance::whereIn('user_id', $userIds)
@@ -109,7 +105,6 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('statistik', 'izinPending', 'topTerlambat', 'grafikMingguan'));
     }
 
-    // ── Monitoring Absensi ───────────────────────────────────────────────
 
     public function monitoring(Request $request): View
     {
@@ -151,7 +146,6 @@ class DashboardController extends Controller
         return view('admin.monitoring', compact('absensiHariIni', 'cabangList', 'deptList'));
     }
 
-    // ── Izin & Cuti ──────────────────────────────────────────────────────
 
     public function izin(Request $request): View
     {
@@ -232,7 +226,6 @@ class DashboardController extends Controller
         return back()->with('status', 'Sesi berhasil dihapus.');
     }
 
-    // ── Karyawan ─────────────────────────────────────────────────────────
 
     public function karyawan(Request $request): View
     {
@@ -262,6 +255,9 @@ class DashboardController extends Controller
         if ($request->filled('role')) {
             $query->role($request->role);
         }
+
+        // dd($query->get()->toArray());
+
 
         $karyawanList  = $query->latest()->paginate(20);
         $totalKaryawan = User::where('tenant_id', $tenantId)->count();
@@ -354,7 +350,6 @@ class DashboardController extends Controller
         return view('admin.laporan', compact('laporanList', 'ringkasan', 'cabangList'));
     }
 
-    // ── Notifikasi ───────────────────────────────────────────────────────
 
     public function notifikasi(): View
     {

@@ -2,7 +2,9 @@
 
     {{-- Slot aksi topbar --}}
     <x-slot:actions>
-        <button onclick="window.print()" class="btn-secondary">📤 Ekspor PDF</button>
+        <button onclick="window.print()" class="btn-secondary">
+            <i class="fa-solid fa-file-export"></i> Ekspor PDF
+        </button>
     </x-slot:actions>
 
     {{-- Kartu Statistik --}}
@@ -13,7 +15,7 @@
             sub="dari {{ $statistik['total'] }} karyawan"
             badge="↑ +3 vs kemarin"
             badge-tipe="naik"
-            ikon="✅"
+            ikon="fa-solid fa-circle-check"
             warna="brand"
             href="{{ route('admin.monitoring') }}"
         />
@@ -23,7 +25,7 @@
             sub="toleransi 5 menit"
             badge="→ sama minggu lalu"
             badge-tipe="sama"
-            ikon="⏰"
+            ikon="fa-solid fa-clock"
             warna="amber"
             href="{{ route('admin.monitoring') }}"
         />
@@ -33,7 +35,7 @@
             sub="belum check-in"
             badge="↑ +1 vs kemarin"
             badge-tipe="turun"
-            ikon="❌"
+            ikon="fa-solid fa-circle-xmark"
             warna="rose"
             href="{{ route('admin.monitoring') }}"
         />
@@ -43,7 +45,7 @@
             sub="{{ $statistik['pending_izin'] }} menunggu persetujuan"
             badge="✓ disetujui {{ $statistik['izin'] - $statistik['pending_izin'] }}"
             badge-tipe="naik"
-            ikon="📋"
+            ikon="fa-solid fa-clipboard"
             warna="emerald"
             href="{{ route('admin.izin') }}"
         />
@@ -129,11 +131,15 @@
                     <div style="display:flex; gap:0.3125rem;">
                         <form method="POST" action="{{ route('admin.izin.setujui', $izin['id']) }}">
                             @csrf @method('PUT')
-                            <button type="submit" style="font-size:0.625rem; font-weight:700; padding:0.25rem 0.5rem; border-radius:0.375rem; background-color:color-mix(in srgb, var(--color-emerald) 15%, transparent); color:var(--color-emerald); border:none; cursor:pointer;">Setujui</button>
+                            <button type="submit" style="font-size:0.625rem; font-weight:700; padding:0.25rem 0.5rem; border-radius:0.375rem; background-color:color-mix(in srgb, var(--color-emerald) 15%, transparent); color:var(--color-emerald); border:none; cursor:pointer;">
+                                <i class="fa-solid fa-check"></i> Setujui
+                            </button>
                         </form>
                         <form method="POST" action="{{ route('admin.izin.tolak', $izin['id']) }}">
                             @csrf @method('PUT')
-                            <button type="submit" style="font-size:0.625rem; font-weight:700; padding:0.25rem 0.5rem; border-radius:0.375rem; background-color:color-mix(in srgb, var(--color-rose) 10%, transparent); color:var(--color-rose); border:none; cursor:pointer;">Tolak</button>
+                            <button type="submit" style="font-size:0.625rem; font-weight:700; padding:0.25rem 0.5rem; border-radius:0.375rem; background-color:color-mix(in srgb, var(--color-rose) 10%, transparent); color:var(--color-rose); border:none; cursor:pointer;">
+                                <i class="fa-solid fa-xmark"></i> Tolak
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -163,7 +169,6 @@
 </x-layouts.admin>
 
 <script>
-    // Grafik batang sederhana
     const data = @json($grafikMingguan);
     const el   = document.getElementById('grafikKehadiran');
     const maks = 47;

@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk — AttendX</title>
+    <title>Absensi</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body style="min-height:100vh; display:flex;">
 
-    {{-- ===== Panel Kiri — Branding ===== --}}
     <div style="
         display: none;
         width: 480px;
@@ -22,17 +21,14 @@
         overflow: hidden;
     " class="branding-panel">
 
-        {{-- Dot grid & glow --}}
         <div class="dot-grid" style="position:absolute; inset:0; opacity:0.4;"></div>
         <div style="position:absolute; bottom:-8rem; left:-8rem; width:20rem; height:20rem; border-radius:50%; background-color:color-mix(in srgb, var(--color-brand) 10%, transparent); filter:blur(64px); pointer-events:none;"></div>
         <div style="position:absolute; top:5rem; right:-5rem; width:15rem; height:15rem; border-radius:50%; background-color:color-mix(in srgb, var(--color-indigo) 10%, transparent); filter:blur(64px); pointer-events:none;"></div>
 
-        {{-- Logo --}}
         <div style="position:relative; z-index:10; display:flex; align-items:center; gap:0.75rem;">
             <div style="width:2.5rem; height:2.5rem; border-radius:0.75rem; background:linear-gradient(135deg, var(--color-brand), var(--color-indigo)); display:flex; align-items:center; justify-content:center; font-size:1.25rem;">👁</div>
             <div>
-                <div style="font-weight:800; font-size:0.9375rem; color:var(--color-dark-50);">AttendX</div>
-                <div style="font-family:var(--font-mono); font-size:0.625rem; color:var(--color-dark-300); letter-spacing:0.1em; margin-top:1px;">PANEL ADMIN</div>
+                <div style="font-weight:800; font-size:0.9375rem; color:var(--color-dark-50);">Abasen</div>
             </div>
         </div>
 
@@ -41,7 +37,6 @@
             <h2 style="font-size:1.875rem; font-weight:800; color:var(--color-dark-50); line-height:1.25; margin-bottom:1rem;">
                 Sistem Absensi<br>
                 <span style="color:var(--color-brand);">Pengenalan Wajah</span><br>
-                Multi-Tenant
             </h2>
             <p style="color:var(--color-dark-200); font-size:0.875rem; line-height:1.6; margin-bottom:2rem;">
                 Kelola kehadiran karyawan dengan teknologi pengenalan wajah,
@@ -53,7 +48,6 @@
                     ['hex' => '#22D3A0', 'teks' => 'Absensi dengan pengenalan wajah & deteksi keaktifan'],
                     ['hex' => '#4F8EF7', 'teks' => 'Validasi GPS radius per cabang secara otomatis'],
                     ['hex' => '#A78BFA', 'teks' => 'Laporan & ekspor PDF/Excel secara langsung'],
-                    ['hex' => '#F59E0B', 'teks' => 'Multi-tenant, data terisolasi per perusahaan'],
                 ] as $fitur)
                     <li style="display:flex; align-items:center; gap:0.75rem;">
                         <div style="width:2rem; height:2rem; border-radius:0.5rem; background-color:color-mix(in srgb, {{ $fitur['hex'] }} 10%, transparent); border:1px solid color-mix(in srgb, {{ $fitur['hex'] }} 20%, transparent); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
@@ -66,27 +60,8 @@
                 @endforeach
             </ul>
         </div>
-
-        {{-- Statistik --}}
-        <div style="position:relative; z-index:10; display:flex; gap:1.5rem;">
-            <div>
-                <div style="font-family:var(--font-mono); font-size:1.25rem; font-weight:800; color:var(--color-dark-50);">47+</div>
-                <div style="font-size:0.6875rem; color:var(--color-dark-300); margin-top:2px;">Karyawan aktif</div>
-            </div>
-            <div style="width:1px; background:var(--color-dark-500);"></div>
-            <div>
-                <div style="font-family:var(--font-mono); font-size:1.25rem; font-weight:800; color:var(--color-dark-50);">3</div>
-                <div style="font-size:0.6875rem; color:var(--color-dark-300); margin-top:2px;">Cabang</div>
-            </div>
-            <div style="width:1px; background:var(--color-dark-500);"></div>
-            <div>
-                <div style="font-family:var(--font-mono); font-size:1.25rem; font-weight:800; color:var(--color-emerald);">99,8%</div>
-                <div style="font-size:0.6875rem; color:var(--color-dark-300); margin-top:2px;">Akurasi wajah</div>
-            </div>
-        </div>
     </div>
 
-    {{-- ===== Panel Kanan — Formulir ===== --}}
     <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:1.5rem;">
         <div style="width:100%; max-width:24rem; animation:var(--animate-fade-up);">
 
@@ -102,7 +77,6 @@
             {{-- Judul --}}
             <div style="margin-bottom:2rem;">
                 <h1 style="font-size:1.5rem; font-weight:800; color:var(--color-dark-50); margin-bottom:0.25rem;">Selamat datang</h1>
-                <p style="font-size:0.875rem; color:var(--color-dark-300);">Masuk ke panel admin untuk mengelola absensi</p>
             </div>
 
             {{-- Pesan error dari session --}}
@@ -161,7 +135,7 @@
                             </label>
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}"
-                                   style="font-size:0.6875rem; color:var(--color-brand); font-weight:600; text-decoration:none;">
+                                    style="font-size:0.6875rem; color:var(--color-brand); font-weight:600; text-decoration:none;">
                                     Lupa kata sandi?
                                 </a>
                             @endif
@@ -235,10 +209,9 @@
                 </div>
             </form>
 
-            {{-- Catatan kaki --}}
             <p style="text-align:center; font-size:0.6875rem; color:var(--color-dark-300); margin-top:2rem;">
-                &copy; {{ date('Y') }} AttendX &middot;
-                <span style="color:var(--color-dark-200);">Laravel {{ app()->version() }}</span>
+                &copy; {{ date('Y') }} Abssensi &middot;
+                <span style="color:var(--color-dark-200);">v{{ config('app.version') }}</span>
             </p>
 
         </div>
